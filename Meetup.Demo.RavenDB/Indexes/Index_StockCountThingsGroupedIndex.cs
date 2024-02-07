@@ -2,7 +2,7 @@
 using Meetup.Demo.RavenDB.Domain;
 using Raven.Client.Documents.Indexes;
 
-namespace Meetup.Demo.RavenDB.App;
+namespace Meetup.Demo.RavenDB.App.Indexes;
 
 public class Index_StockCountThingsGroupedIndex
     : AbstractIndexCreationTask<StockCountReadEvent, Index_StockCountThingsGroupedIndex.Result>

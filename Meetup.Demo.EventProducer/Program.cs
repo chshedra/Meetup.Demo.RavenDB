@@ -7,6 +7,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        //send stock count session info
         Thread.Sleep(5000);
         var producer = new StockCountEventProducer();
 

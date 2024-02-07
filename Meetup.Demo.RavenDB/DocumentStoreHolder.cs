@@ -17,11 +17,11 @@ public class DocumentStoreHolder
     {
         IDocumentStore store = new DocumentStore()
         {
-            Urls = new[] { "https://a.free.shchedra.ravendb.cloud", },
+            Urls = new[] { "https://a.ashchedra.ravendb.community:8080/", },
             Conventions = { MaxNumberOfRequestsPerSession = 10, UseOptimisticConcurrency = true },
             Database = "test",
             Certificate = new X509Certificate2(
-                "C:\\Users\\shedr\\source\\repos\\Meetup.Demo\\Meetup.Demo.RavenDB\\Meetup.Demo.RavenDB\\Cert\\free.shchedra.client.certificate.pfx"
+                "D:\\RavenDB\\ashchedra.Cluster.Settings 2024-02-07 16-02\\admin.client.certificate.ashchedra.pfx"
             ),
         }.Initialize();
 
