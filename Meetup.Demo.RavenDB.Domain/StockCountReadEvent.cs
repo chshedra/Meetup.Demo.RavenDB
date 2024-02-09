@@ -1,4 +1,4 @@
-﻿namespace Meetup.Demo.MessageBroker;
+﻿namespace Meetup.Demo.RavenDB.Domain;
 
 public class StockCountReadEvent
 {

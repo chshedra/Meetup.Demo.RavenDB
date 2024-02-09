@@ -1,7 +1,5 @@
-﻿using System.Text;
-using System.Text.Json;
-using Meetup.Demo.MessageBroker;
-using RabbitMQ.Client;
+﻿using Meetup.Demo.MessageBroker;
+using Meetup.Demo.RavenDB.Domain;
 
 internal class Program
 {

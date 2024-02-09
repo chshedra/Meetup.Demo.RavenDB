@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
-using Meetup.Demo.MessageBroker;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Meetup.Demo.RavenDB.App;
