@@ -24,7 +24,7 @@ internal class Program
 
         //Send event batches
         var random = new Random();
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 10; i++)
         {
             var readEvent = new StockCountReadEvent()
             {

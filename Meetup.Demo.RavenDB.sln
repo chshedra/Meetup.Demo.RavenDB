@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.RavenDB.App", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.RavenDB.Domain", "Meetup.Demo.RavenDB.Domain\Meetup.Demo.RavenDB.Domain.csproj", "{C51058E8-9D71-493A-BD01-EC2957757E36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meetup.Demo.Seeder", "Meetup.Demo.Factory\Meetup.Demo.Seeder.csproj", "{2B9482F6-281C-445B-BF4D-92F9919CB8D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.Seeder", "Meetup.Demo.Factory\Meetup.Demo.Seeder.csproj", "{2B9482F6-281C-445B-BF4D-92F9919CB8D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meetup.Demo.EventProducer", "Meetup.Demo.EventProducer\Meetup.Demo.EventProducer.csproj", "{3D89F9AF-9331-490F-B2B0-BDE662A2E1C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.EventProducer", "Meetup.Demo.EventProducer\Meetup.Demo.EventProducer.csproj", "{3D89F9AF-9331-490F-B2B0-BDE662A2E1C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meetup.Demo.MessageBroker", "Meetup.Demo.MessageBroker\Meetup.Demo.MessageBroker.csproj", "{802F4F46-C246-42BB-A4CA-61049911C1B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.MessageBroker", "Meetup.Demo.MessageBroker\Meetup.Demo.MessageBroker.csproj", "{802F4F46-C246-42BB-A4CA-61049911C1B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meetup.Demo.Postgres.App", "Meetup.Demo.Postgres.App\Meetup.Demo.Postgres.App.csproj", "{AB177338-D1F9-44F7-B319-7427910C4CA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{802F4F46-C246-42BB-A4CA-61049911C1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{802F4F46-C246-42BB-A4CA-61049911C1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{802F4F46-C246-42BB-A4CA-61049911C1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB177338-D1F9-44F7-B319-7427910C4CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB177338-D1F9-44F7-B319-7427910C4CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB177338-D1F9-44F7-B319-7427910C4CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB177338-D1F9-44F7-B319-7427910C4CA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

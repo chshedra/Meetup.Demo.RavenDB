@@ -5,17 +5,15 @@ using Raven.Client.Exceptions.Database;
 using Raven.Client.ServerWide;
 using Raven.Client.ServerWide.Operations;
 
-namespace Meetup.Demo.RavenDB;
+namespace Meetup.Demo.RavenDB.App;
 
-public class DocumentStoreHolder
+public class DocumentStoreHolder : IDocumentStoreHolder
 {
-    private static Lazy<IDocumentStore> store = new Lazy<IDocumentStore>(CreateStore);
+    public IDocumentStore Store { get; }
 
-    public static IDocumentStore Store => store.Value;
-
-    private static IDocumentStore CreateStore()
+    public DocumentStoreHolder()
     {
-        IDocumentStore store = new DocumentStore()
+        var store = new DocumentStore
         {
             Urls = new[] { "https://a.ashchedra.ravendb.community:8080/", },
             Conventions = { MaxNumberOfRequestsPerSession = 10, UseOptimisticConcurrency = true },
@@ -27,10 +25,10 @@ public class DocumentStoreHolder
 
         CreateDataBaseIfNotExists(store);
 
-        return store;
+        Store = store;
     }
 
-    public static void CreateDataBaseIfNotExists(IDocumentStore store, string? database = null)
+    public void CreateDataBaseIfNotExists(IDocumentStore store, string? database = null)
     {
         database ??= store.Database;
 
