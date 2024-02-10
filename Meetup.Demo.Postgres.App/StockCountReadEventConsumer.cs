@@ -2,19 +2,20 @@
 using System.Text.Json;
 using Meetup.Demo.MessageBroker;
 using Meetup.Demo.RavenDB.Domain;
+using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Meetup.Demo.RavenDB.App;
+namespace Meetup.Demo.Postgres.App;
 
 public class StockCountReadEventConsumer : EventConsumerBase
 {
-    private readonly IDocumentStoreHolder _documentStoreHolder;
+    private readonly DbContext _dbContext;
 
-    public StockCountReadEventConsumer(IDocumentStoreHolder documentStoreHolder)
+    public StockCountReadEventConsumer(DbContext dbContext)
         : base(nameof(StockCountReadEvent))
     {
-        _documentStoreHolder = documentStoreHolder;
+        _dbContext = dbContext;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -28,10 +29,14 @@ public class StockCountReadEventConsumer : EventConsumerBase
             var json = Encoding.UTF8.GetString(body);
             var stockCountEvent = JsonSerializer.Deserialize<StockCountReadEvent>(json);
 
-            using var session = _documentStoreHolder.Store.OpenSession();
-            session.Store(stockCountEvent);
-            Console.WriteLine($" [x] Batch {stockCountEvent?.BatchId}");
-            session.SaveChanges();
+            using var dbContext = new AppDbContext();
+
+            if (stockCountEvent != null)
+            {
+                dbContext.Add(stockCountEvent);
+                Console.WriteLine($" [x] Batch {stockCountEvent?.BatchId}");
+            }
+            dbContext.SaveChanges();
         };
         _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
 

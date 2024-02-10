@@ -2,16 +2,22 @@
 using System.Text.Json;
 using Meetup.Demo.MessageBroker;
 using Meetup.Demo.RavenDB.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Meetup.Demo.RavenDB.App;
+namespace Meetup.Demo.Postgres.App;
 
 public class StockCountSessionEventConsumer : EventConsumerBase
 {
-    public StockCountSessionEventConsumer()
-        : base(nameof(StockCountSessionEvent)) { }
+    private readonly DbContext _dbContext;
+
+    public StockCountSessionEventConsumer(DbContext dbContext)
+        : base(nameof(StockCountSessionEvent))
+    {
+        _dbContext = dbContext;
+    }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {

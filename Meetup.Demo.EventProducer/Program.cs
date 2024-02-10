@@ -31,7 +31,7 @@ internal class Program
             };
 
             var things = new List<ThingReadInfo>();
-            for (int j = 0; j < 1000; j++)
+            for (int j = 0; j < 10; j++)
             {
                 var zoneId = random.Next(1, 4);
                 var userId = random.Next(1, 10);
