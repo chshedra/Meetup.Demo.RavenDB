@@ -1,21 +1,29 @@
-﻿using Meetup.Demo.Factory;
-using Meetup.Demo.RavenDB.Domain;
+﻿using Meetup.Demo.RavenDB.Domain;
+using Meetup.Demo.Seeder;
 
-var store = DocumentStoreHolder.Store;
-
-using (var session = store.OpenSession())
+internal class Program
 {
-    for (var i = 100; i < 500000; i++)
+    private static void Main(string[] args)
     {
-        session.Store(
-            new Product()
+        var store = DocumentStoreHolder.Store;
+
+        using var session = store.OpenSession();
+        using var dbContext = new AppDbContext();
+
+        for (var i = 0; i < 500000; i++)
+        {
+            var product = new Product()
             {
                 Id = $"ProductId-{i}",
                 Name = $"Product {i}",
                 Description = $"Description of product {i}"
-            }
-        );
-    }
+            };
 
-    session.SaveChanges();
+            session.Store(product);
+            dbContext.Products.Add(product);
+        }
+
+        session.SaveChanges();
+        dbContext.SaveChanges();
+    }
 }
