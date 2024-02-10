@@ -1,5 +1,4 @@
 ﻿using Meetup.Demo.Postgres.App;
-using Meetup.Demo.RavenDB.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,25 +7,9 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        using (var dbContext = new AppDbContext())
-        {
-            var product = new Product()
-            {
-                Id = "Product-1",
-                Name = "Product 1",
-                Description = "Description of product 1"
-            };
-
-            dbContext.Add(product);
-            dbContext.SaveChanges();
-        }
-
-        using (var dbContext = new AppDbContext())
-        {
-            var product = dbContext.Products.First();
-
-            Console.WriteLine($"{product.Id}");
-        }
+        var host = CreateHostBuilder(args).Build();
+        host.Run();
+        Console.ReadLine();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -35,6 +18,8 @@ public class Program
                 (hostContext, services) =>
                 {
                     services.AddScoped<DbContext, AppDbContext>();
+                    services.AddHostedService<StockCountReadEventConsumer>();
+                    services.AddHostedService<StockCountSessionEventConsumer>();
                 }
             );
 }

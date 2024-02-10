@@ -26,6 +26,8 @@ internal class Program
         {
             var readEvent = new StockCountReadEvent()
             {
+                Id = Guid.NewGuid().ToString(),
+                StockCountId = "StocCount1",
                 SessionId = "Session1",
                 BatchId = $"Batch-{i}"
             };
@@ -37,6 +39,7 @@ internal class Program
                 var userId = random.Next(1, 10);
                 var thingReadInfo = new ThingReadInfo()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     ProductId = $"ProductId-{i}",
                     ThingId = $"ThingId-{i}{j}",
                     ZoneId = $"Zone-{zoneId}",

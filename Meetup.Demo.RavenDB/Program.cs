@@ -19,6 +19,7 @@ public class Program
                 {
                     services.AddSingleton<IDocumentStoreHolder, DocumentStoreHolder>();
                     services.AddHostedService<StockCountReadEventConsumer>();
+                    services.AddHostedService<StockCountSessionEventConsumer>();
                 }
             );
 }
