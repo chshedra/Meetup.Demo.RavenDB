@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Meetup.Demo.Domain;
 using Meetup.Demo.MessageBroker;
-using Meetup.Demo.RavenDB.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;

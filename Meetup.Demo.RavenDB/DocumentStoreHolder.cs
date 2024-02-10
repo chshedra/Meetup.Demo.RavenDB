@@ -23,12 +23,17 @@ public class DocumentStoreHolder : IDocumentStoreHolder
             ),
         }.Initialize();
 
+        store.OnBeforeQuery += (sender, beforeQueryExecutedArgs) =>
+        {
+            beforeQueryExecutedArgs.QueryCustomization.WaitForNonStaleResults();
+        };
+
         CreateDataBaseIfNotExists(store);
 
         Store = store;
     }
 
-    public void CreateDataBaseIfNotExists(IDocumentStore store, string? database = null)
+    private void CreateDataBaseIfNotExists(IDocumentStore store, string? database = null)
     {
         database ??= store.Database;
 

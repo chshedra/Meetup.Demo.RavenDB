@@ -1,4 +1,4 @@
-﻿using Meetup.Demo.RavenDB.Domain;
+﻿using Meetup.Demo.Domain;
 using Meetup.Demo.Seeder;
 
 internal class Program

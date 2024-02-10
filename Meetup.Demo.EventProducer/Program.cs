@@ -1,5 +1,5 @@
-﻿using Meetup.Demo.MessageBroker;
-using Meetup.Demo.RavenDB.Domain;
+﻿using Meetup.Demo.Domain;
+using Meetup.Demo.MessageBroker;
 
 internal class Program
 {

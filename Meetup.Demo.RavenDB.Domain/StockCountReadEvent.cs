@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Meetup.Demo.RavenDB.Domain;
+﻿namespace Meetup.Demo.Domain;
 
 public class StockCountReadEvent
 {

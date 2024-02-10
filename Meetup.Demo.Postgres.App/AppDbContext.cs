@@ -1,6 +1,6 @@
 ﻿namespace Meetup.Demo.Postgres.App;
 
-using Meetup.Demo.RavenDB.Domain;
+using Meetup.Demo.Domain;
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext

@@ -1,6 +1,6 @@
 ﻿namespace Meetup.Demo.Seeder;
 
-using Meetup.Demo.RavenDB.Domain;
+using Meetup.Demo.Domain;
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
