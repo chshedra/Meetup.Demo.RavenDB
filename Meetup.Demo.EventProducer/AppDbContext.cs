@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 public class AppDbContext : DbContext
 {
     public DbSet<Product> Products { get; set; }
+
     public DbSet<StockCountReadEvent> StockCountReadEvents { get; set; }
+
+    public DbSet<ThingReadInfo> Things { get; set; }
 
     public AppDbContext()
     {

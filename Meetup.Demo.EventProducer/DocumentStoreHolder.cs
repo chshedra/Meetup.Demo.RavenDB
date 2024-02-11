@@ -1,12 +1,11 @@
 ﻿using System.Security.Cryptography.X509Certificates;
-using Meetup.Demo.RavenDB.App.Indexes;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Operations;
 using Raven.Client.Exceptions.Database;
 using Raven.Client.ServerWide;
 using Raven.Client.ServerWide.Operations;
 
-namespace Meetup.Demo.RavenDB.App;
+namespace Meetup.Demo.Client;
 
 public class DocumentStoreHolder : IDocumentStoreHolder
 {
@@ -24,8 +23,12 @@ public class DocumentStoreHolder : IDocumentStoreHolder
             ),
         }.Initialize();
 
+        store.OnBeforeQuery += (sender, beforeQueryExecutedArgs) =>
+        {
+            beforeQueryExecutedArgs.QueryCustomization.WaitForNonStaleResults();
+        };
+
         CreateDataBaseIfNotExists(store);
-        new Index_StockCountThingsGroupedIndex().Execute(store);
 
         Store = store;
     }

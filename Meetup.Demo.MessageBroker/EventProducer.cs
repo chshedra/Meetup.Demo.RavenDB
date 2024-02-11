@@ -4,7 +4,7 @@ using RabbitMQ.Client;
 
 namespace Meetup.Demo.MessageBroker;
 
-public class StockCountEventProducer
+public class EventProducer
 {
     public void SendStockCountMessage<T>(T message)
     {

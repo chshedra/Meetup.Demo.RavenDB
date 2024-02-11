@@ -23,7 +23,7 @@ public class StockCountReadEventConsumer : EventConsumerBase
         stoppingToken.ThrowIfCancellationRequested();
 
         var consumer = new EventingBasicConsumer(_channel);
-        consumer.Received += (model, e) =>
+        consumer.Received += async (model, e) =>
         {
             byte[] body = e.Body.ToArray();
             var json = Encoding.UTF8.GetString(body);
@@ -33,10 +33,10 @@ public class StockCountReadEventConsumer : EventConsumerBase
 
             if (stockCountEvent != null)
             {
-                dbContext.Add(stockCountEvent);
+                await dbContext.AddAsync(stockCountEvent);
                 Console.WriteLine($" [x] Batch {stockCountEvent?.BatchId}");
             }
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         };
         _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
 

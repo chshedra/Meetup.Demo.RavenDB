@@ -24,7 +24,7 @@ public class Index_StockCountThingsGroupedIndex
     {
         Map = batches =>
             from batch in batches
-            from thing in batch.ThingsBatch
+            from thing in batch.ThingreadInfos
             let desc = LoadDocument<Product>(thing.ProductId, "Products").Description
             select new Result
             {

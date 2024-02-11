@@ -10,5 +10,5 @@ public class StockCountReadEvent
 
     public string BatchId { get; set; }
 
-    public List<ThingReadInfo> ThingsBatch { get; set; }
+    public List<ThingReadInfo> ThingreadInfos { get; set; }
 }
