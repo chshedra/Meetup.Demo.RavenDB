@@ -13,12 +13,16 @@ public class StockCountEventProducer : BackgroundService
         Task.Run(() =>
         {
             //send stock count session info
+            Thread.Sleep(3000);
+
             var producer = new EventProducer();
 
             var stockCountEvent = new StockCountSessionEvent()
             {
-                SessionId = "Session1",
-                StockCountId = "StockCountId",
+                SessionId = "Session-1",
+                StockCountId = "StockCountId-1",
+                Status = "Active",
+                StartedAt = DateTime.UtcNow,
             };
 
             producer.SendStockCountMessage(stockCountEvent);
@@ -33,8 +37,8 @@ public class StockCountEventProducer : BackgroundService
                 var readEvent = new StockCountReadEvent()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    StockCountId = "StocCount1",
-                    SessionId = "Session1",
+                    StockCountId = "StockCountId-1",
+                    SessionId = "SessionId-1",
                     BatchId = $"Batch-{i}"
                 };
 
@@ -54,12 +58,10 @@ public class StockCountEventProducer : BackgroundService
                     things.Add(thingReadInfo);
                 }
 
-                readEvent.ThingreadInfos = things;
+                readEvent.Things = things;
                 producer.SendStockCountMessage(readEvent);
 
-                Console.WriteLine(
-                    $" [x] Sent {readEvent.BatchId} {readEvent.ThingreadInfos.Count}"
-                );
+                Console.WriteLine($" [x] Sent {readEvent.BatchId} {readEvent.Things.Count}");
                 Thread.Sleep(3000);
             }
         });

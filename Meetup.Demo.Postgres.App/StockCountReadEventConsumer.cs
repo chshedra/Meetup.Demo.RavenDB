@@ -30,14 +30,20 @@ public class StockCountReadEventConsumer : EventConsumerBase
             var json = Encoding.UTF8.GetString(body);
             var stockCountEvent = JsonSerializer.Deserialize<StockCountReadEvent>(json);
 
-            using var dbContext = new AppDbContext();
-
             if (stockCountEvent != null)
             {
-                await dbContext.AddAsync(stockCountEvent);
-                Console.WriteLine($" [x] Batch {stockCountEvent?.BatchId}");
+                var things = stockCountEvent.Things.Select(x => new Thing
+                {
+                    Id = x.ThingId,
+                    ProductId = x.ProductId,
+                    ZoneId = x.ZoneId,
+                    StockCountId = stockCountEvent.StockCountId
+                });
+
+                await _dbContext.AddRangeAsync(things);
+                Console.WriteLine($" [x] Batch consumed: {stockCountEvent?.BatchId}");
             }
-            await dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         };
         _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
 

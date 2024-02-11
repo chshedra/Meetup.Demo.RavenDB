@@ -1,15 +1,15 @@
-﻿namespace Meetup.Demo.Common.Postgres;
-
-using Meetup.Demo.Domain;
+﻿using Meetup.Demo.Domain;
 using Microsoft.EntityFrameworkCore;
+
+namespace Meetup.Demo.Common.Postgres;
 
 public class AppDbContext : DbContext
 {
     public DbSet<Product> Products { get; set; }
 
-    public DbSet<StockCountReadEvent> StockCountReadEvents { get; set; }
+    public DbSet<StockCount> StockCounts { get; set; }
 
-    public DbSet<ThingReadInfo> Things { get; set; }
+    public DbSet<Thing> Things { get; set; }
 
     public AppDbContext()
     {

@@ -29,10 +29,21 @@ public class StockCountReadEventConsumer : EventConsumerBase
             var json = Encoding.UTF8.GetString(body);
             var stockCountEvent = JsonSerializer.Deserialize<StockCountReadEvent>(json);
 
-            using var session = _documentStoreHolder.Store.OpenAsyncSession();
-            await session.StoreAsync(stockCountEvent);
+            if (stockCountEvent != null)
+            {
+                var things = stockCountEvent.Things.Select(x => new Thing
+                {
+                    Id = x.ThingId,
+                    ProductId = x.ProductId,
+                    ZoneId = x.ZoneId
+                });
+
+                using var session = _documentStoreHolder.Store.OpenAsyncSession();
+                await session.StoreAsync(things);
+                await session.SaveChangesAsync();
+            }
+
             Console.WriteLine($" [x] Batch {stockCountEvent?.BatchId}");
-            await session.SaveChangesAsync();
         };
         _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
 

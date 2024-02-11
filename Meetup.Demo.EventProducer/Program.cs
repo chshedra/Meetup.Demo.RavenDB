@@ -1,5 +1,7 @@
 ﻿using Meetup.Demo.Client;
+using Meetup.Demo.Common.Postgres;
 using Meetup.Demo.Common.RavenDB;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,6 +20,7 @@ public class Program
                 (hostContext, services) =>
                 {
                     services.AddSingleton<IDocumentStoreHolder, DocumentStoreHolder>();
+                    services.AddTransient<AppDbContext>();
                     services.AddHostedService<StockCountEventProducer>();
                     services.AddHostedService<RequestProducer>();
                 }

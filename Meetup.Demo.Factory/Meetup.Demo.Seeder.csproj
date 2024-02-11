@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Meetup.Demo.MessageBroker\Meetup.Demo.Common.csproj" />
     <ProjectReference Include="..\Meetup.Demo.RavenDB.Domain\Meetup.Demo.Domain.csproj" />
   </ItemGroup>
 

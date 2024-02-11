@@ -8,10 +8,12 @@ namespace Meetup.Demo.Client;
 public class RequestProducer : BackgroundService
 {
     private readonly IDocumentStoreHolder _documentStoreHolder;
+    private readonly AppDbContext _dbContext;
 
-    public RequestProducer(IDocumentStoreHolder documentStoreHolder)
+    public RequestProducer(IDocumentStoreHolder documentStoreHolder, AppDbContext dbContext)
     {
         _documentStoreHolder = documentStoreHolder;
+        _dbContext = dbContext;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -24,7 +26,6 @@ public class RequestProducer : BackgroundService
                 var store = _documentStoreHolder.Store;
 
                 // using var session = store.OpenAsyncSession();
-                using var dbContext = new AppDbContext();
 
                 //var ravenReadEvents = await session
                 //    .Query<StockCountReadEvent>()
@@ -34,12 +35,9 @@ public class RequestProducer : BackgroundService
 
                 try
                 {
-                    var postgresReadEvents = await dbContext
-                        .Things.Include(x => x.StockCountReadEvent)
-                        .Where(x =>
-                            x.StockCountReadEvent != null
-                            && x.StockCountReadEvent.SessionId == "Session1"
-                        )
+                    var postgresReadEvents = await _dbContext
+                        .Things.Include(x => x.StockCount)
+                        .Where(x => x.StockCount != null && x.StockCount.Id == "StockCountId-1")
                         .GroupBy(x => x.ProductId)
                         .ToListAsync();
                     Console.WriteLine($"Events fetched: {postgresReadEvents.Count}");

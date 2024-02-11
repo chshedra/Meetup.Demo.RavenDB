@@ -1,11 +1,12 @@
-﻿using Meetup.Demo.Domain;
-using Meetup.Demo.Seeder;
+﻿using Meetup.Demo.Common.Postgres;
+using Meetup.Demo.Common.RavenDB;
+using Meetup.Demo.Domain;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        var store = DocumentStoreHolder.Store;
+        var store = new DocumentStoreHolder().Store;
 
         using var session = store.OpenSession();
         using var dbContext = new AppDbContext();

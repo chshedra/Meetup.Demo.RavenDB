@@ -4,7 +4,7 @@ using Raven.Client.Documents.Indexes;
 namespace Meetup.Demo.RavenDB.App.Indexes;
 
 public class Index_StockCountThingsGroupedIndex
-    : AbstractIndexCreationTask<StockCountReadEvent, Index_StockCountThingsGroupedIndex.Result>
+    : AbstractIndexCreationTask<Thing, Index_StockCountThingsGroupedIndex.Result>
 {
     public class Result
     {
@@ -21,9 +21,8 @@ public class Index_StockCountThingsGroupedIndex
 
     public Index_StockCountThingsGroupedIndex()
     {
-        Map = batches =>
-            from batch in batches
-            from thing in batch.ThingreadInfos
+        Map = things =>
+            from thing in things
             let desc = LoadDocument<Product>(thing.ProductId, "Products").Description
             select new Result
             {
