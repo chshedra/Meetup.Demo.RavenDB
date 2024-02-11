@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.Seeder", "Meetu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.Client", "Meetup.Demo.EventProducer\Meetup.Demo.Client.csproj", "{3D89F9AF-9331-490F-B2B0-BDE662A2E1C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.MessageBroker", "Meetup.Demo.MessageBroker\Meetup.Demo.MessageBroker.csproj", "{802F4F46-C246-42BB-A4CA-61049911C1B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.Common", "Meetup.Demo.MessageBroker\Meetup.Demo.Common.csproj", "{802F4F46-C246-42BB-A4CA-61049911C1B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meetup.Demo.Postgres.App", "Meetup.Demo.Postgres.App\Meetup.Demo.Postgres.App.csproj", "{AB177338-D1F9-44F7-B319-7427910C4CA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.Postgres.App", "Meetup.Demo.Postgres.App\Meetup.Demo.Postgres.App.csproj", "{AB177338-D1F9-44F7-B319-7427910C4CA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

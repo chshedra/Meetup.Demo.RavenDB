@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 
-namespace Meetup.Demo.MessageBroker;
+namespace Meetup.Demo.Common.MessageBroker;
 
 public abstract class EventConsumerBase : BackgroundService
 {

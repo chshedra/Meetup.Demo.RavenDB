@@ -1,6 +1,6 @@
 ﻿using Raven.Client.Documents;
 
-namespace Meetup.Demo.RavenDB.App;
+namespace Meetup.Demo.Common.RavenDB;
 
 public interface IDocumentStoreHolder
 {

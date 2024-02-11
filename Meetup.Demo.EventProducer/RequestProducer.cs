@@ -1,5 +1,5 @@
-﻿using Meetup.Demo.Domain;
-using Meetup.Demo.Postgres.App;
+﻿using Meetup.Demo.Common.Postgres;
+using Meetup.Demo.Common.RavenDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 

@@ -5,7 +5,7 @@ using Raven.Client.Exceptions.Database;
 using Raven.Client.ServerWide;
 using Raven.Client.ServerWide.Operations;
 
-namespace Meetup.Demo.Client;
+namespace Meetup.Demo.Common.RavenDB;
 
 public class DocumentStoreHolder : IDocumentStoreHolder
 {

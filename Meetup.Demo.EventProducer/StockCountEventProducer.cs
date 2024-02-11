@@ -1,5 +1,5 @@
-﻿using Meetup.Demo.Domain;
-using Meetup.Demo.MessageBroker;
+﻿using Meetup.Demo.Common.MessageBroker;
+using Meetup.Demo.Domain;
 using Microsoft.Extensions.Hosting;
 
 namespace Meetup.Demo.Client;

@@ -1,4 +1,5 @@
 ﻿using Meetup.Demo.Client;
+using Meetup.Demo.Common.RavenDB;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

@@ -1,4 +1,5 @@
-﻿using Meetup.Demo.Postgres.App;
+﻿using Meetup.Demo.Common.Postgres;
+using Meetup.Demo.Postgres.App;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

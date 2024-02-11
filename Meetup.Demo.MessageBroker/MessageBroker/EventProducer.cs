@@ -2,7 +2,7 @@
 using System.Text.Json;
 using RabbitMQ.Client;
 
-namespace Meetup.Demo.MessageBroker;
+namespace Meetup.Demo.Common.MessageBroker;
 
 public class EventProducer
 {

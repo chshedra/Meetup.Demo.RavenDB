@@ -1,5 +1,4 @@
 ﻿using Meetup.Demo.Domain;
-using Meetup.Demo.MessageBroker;
 using Raven.Client.Documents.Indexes;
 
 namespace Meetup.Demo.RavenDB.App.Indexes;
