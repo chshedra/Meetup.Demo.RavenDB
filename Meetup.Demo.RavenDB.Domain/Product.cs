@@ -11,5 +11,5 @@ public class Product
     public string Description { get; set; }
 
     [JsonIgnore]
-    public List<ThingReadInfo> Things { get; set; }
+    public List<Thing> Things { get; set; }
 }

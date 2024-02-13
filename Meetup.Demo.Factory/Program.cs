@@ -11,7 +11,7 @@ internal class Program
         using var session = store.OpenSession();
         using var dbContext = new AppDbContext();
 
-        for (var i = 0; i < 500000; i++)
+        for (var i = 400000; i < 500000; i++)
         {
             var product = new Product()
             {

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using Meetup.Demo.Common.MessageBroker;
+using Meetup.Demo.Common.Postgres;
 using Meetup.Demo.Domain;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
@@ -10,9 +11,9 @@ namespace Meetup.Demo.Postgres.App;
 
 public class StockCountSessionEventConsumer : EventConsumerBase
 {
-    private readonly DbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public StockCountSessionEventConsumer(DbContext dbContext)
+    public StockCountSessionEventConsumer(AppDbContext dbContext)
         : base(nameof(StockCountSessionEvent))
     {
         _dbContext = dbContext;
@@ -29,7 +30,11 @@ public class StockCountSessionEventConsumer : EventConsumerBase
             var json = Encoding.UTF8.GetString(body);
             var stockCountEvent = JsonSerializer.Deserialize<StockCountSessionEvent>(json);
 
-            if (stockCountEvent != null)
+            var existedStockCount = await _dbContext.StockCounts.FirstOrDefaultAsync(x =>
+                x.Id == stockCountEvent.StockCountId
+            );
+
+            if (stockCountEvent != null && existedStockCount == null)
             {
                 var stockCount = new StockCount
                 {

@@ -18,7 +18,7 @@ public class Program
             .ConfigureServices(
                 (hostContext, services) =>
                 {
-                    services.AddTransient<DbContext, AppDbContext>();
+                    services.AddTransient<AppDbContext>();
                     services.AddHostedService<StockCountReadEventConsumer>();
                     services.AddHostedService<StockCountSessionEventConsumer>();
                 }

@@ -1,5 +1,7 @@
-﻿using Meetup.Demo.Common.Postgres;
+﻿using System.Diagnostics;
+using Meetup.Demo.Common.Postgres;
 using Meetup.Demo.Common.RavenDB;
+using Meetup.Demo.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
@@ -35,12 +37,29 @@ public class RequestProducer : BackgroundService
 
                 try
                 {
+                    var sw = new Stopwatch();
+                    sw.Start();
+
                     var postgresReadEvents = await _dbContext
                         .Things.Include(x => x.StockCount)
+                        .Include(x => x.Product)
                         .Where(x => x.StockCount != null && x.StockCount.Id == "StockCountId-1")
                         .GroupBy(x => x.ProductId)
+                        .Select(x => new StockCountGroupedResult
+                        {
+                            ProductId = x.Key,
+                            //Description = x.First().Product.Description,
+                            ZoneCounts = x.GroupBy(x => x.ZoneId)
+                                .ToDictionary(x => x.Key, x => x.Sum(x => 1)),
+                            Count = x.Sum(x => 1)
+                        })
                         .ToListAsync();
-                    Console.WriteLine($"Events fetched: {postgresReadEvents.Count}");
+
+                    sw.Stop();
+
+                    Console.WriteLine(
+                        $"Events fetched: {postgresReadEvents.Count} {sw.ElapsedMilliseconds}"
+                    );
                 }
                 catch (Exception ex)
                 {

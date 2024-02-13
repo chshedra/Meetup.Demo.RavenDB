@@ -11,9 +11,9 @@ namespace Meetup.Demo.Postgres.App;
 
 public class StockCountReadEventConsumer : EventConsumerBase
 {
-    private readonly DbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public StockCountReadEventConsumer(DbContext dbContext)
+    public StockCountReadEventConsumer(AppDbContext dbContext)
         : base(nameof(StockCountReadEvent))
     {
         _dbContext = dbContext;
@@ -40,7 +40,26 @@ public class StockCountReadEventConsumer : EventConsumerBase
                     StockCountId = stockCountEvent.StockCountId
                 });
 
-                await _dbContext.AddRangeAsync(things);
+                foreach (var thing in things)
+                {
+                    var product = await _dbContext.Products.FirstAsync(x =>
+                        x.Id == thing.ProductId
+                    );
+                }
+
+                var stockCount = await _dbContext.StockCounts.FirstAsync(x =>
+                    x.Id == stockCountEvent.StockCountId
+                );
+
+                if (stockCount.Things == null)
+                {
+                    stockCount.Things = new List<Thing>(things);
+                }
+                else
+                {
+                    stockCount.Things.AddRange(things);
+                }
+
                 Console.WriteLine($" [x] Batch consumed: {stockCountEvent?.BatchId}");
             }
             await _dbContext.SaveChangesAsync();
