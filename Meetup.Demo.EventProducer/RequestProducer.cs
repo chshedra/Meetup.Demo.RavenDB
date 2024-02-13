@@ -48,7 +48,7 @@ public class RequestProducer : BackgroundService
                         .Select(x => new StockCountGroupedResult
                         {
                             ProductId = x.Key,
-                            //Description = x.First().Product.Description,
+                            Description = x.First().Product.Description,
                             ZoneCounts = x.GroupBy(x => x.ZoneId)
                                 .ToDictionary(x => x.Key, x => x.Sum(x => 1)),
                             Count = x.Sum(x => 1)
