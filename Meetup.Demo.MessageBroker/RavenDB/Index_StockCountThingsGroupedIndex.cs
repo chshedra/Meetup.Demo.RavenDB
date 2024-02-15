@@ -1,7 +1,7 @@
 ﻿using Meetup.Demo.Domain;
 using Raven.Client.Documents.Indexes;
 
-namespace Meetup.Demo.RavenDB.App.Indexes;
+namespace Meetup.Demo.Common.RavenDB;
 
 public class Index_StockCountThingsGroupedIndex
     : AbstractIndexCreationTask<Thing, StockCountGroupedResult>
@@ -18,19 +18,19 @@ public class Index_StockCountThingsGroupedIndex
                 ProductId = thing.ProductId,
                 Description = desc,
                 ZoneCounts = new(),
-                Count = 1
+                Counted = 1
             };
 
         Reduce = results =>
             from result in results
             group result by result.ProductId into g
-            select new
+            select new StockCountGroupedResult
             {
                 ProductId = g.Key,
                 Description = g.Select(x => x.Description).FirstOrDefault(),
                 ZoneCounts = g.GroupBy(x => x.ZoneId)
-                    .ToDictionary(x => x.Key, x => x.Sum(x => x.Count)),
-                Count = g.Sum(x => x.Count)
+                    .ToDictionary(x => x.Key, x => x.Sum(x => x.Counted)),
+                Counted = g.Sum(x => x.Counted)
             };
     }
 }

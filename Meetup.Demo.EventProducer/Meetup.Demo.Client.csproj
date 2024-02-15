@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Meetup.Demo.MessageBroker\Meetup.Demo.Common.csproj" />
     <ProjectReference Include="..\Meetup.Demo.RavenDB.Domain\Meetup.Demo.Domain.csproj" />
+    <ProjectReference Include="..\Meetup.Demo.RavenDB\Meetup.Demo.RavenDB.App.csproj" />
   </ItemGroup>
 
 </Project>

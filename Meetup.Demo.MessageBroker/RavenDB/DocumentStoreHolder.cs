@@ -29,6 +29,7 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         };
 
         CreateDataBaseIfNotExists(store);
+        new Index_StockCountThingsGroupedIndex().Execute(store);
 
         Store = store;
     }

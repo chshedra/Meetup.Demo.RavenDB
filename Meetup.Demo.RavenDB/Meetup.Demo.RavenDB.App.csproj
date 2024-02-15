@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Meetup.Demo.RavenDB.Domain\Meetup.Demo.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Indexes\" />
+  </ItemGroup>
+
 </Project>

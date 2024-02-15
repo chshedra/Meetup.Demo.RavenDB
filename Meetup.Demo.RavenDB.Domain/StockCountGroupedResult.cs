@@ -6,7 +6,9 @@ public class StockCountGroupedResult
 
     public string Description { get; set; }
 
+    public string ZoneId { get; set; }
+
     public Dictionary<string, int> ZoneCounts { get; set; }
 
-    public int Count { get; set; }
+    public int Counted { get; set; }
 }

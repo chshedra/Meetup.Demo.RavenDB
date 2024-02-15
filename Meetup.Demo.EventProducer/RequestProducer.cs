@@ -22,7 +22,7 @@ public class RequestProducer : BackgroundService
     {
         Task.Run(async () =>
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 3000; i++)
             {
                 Thread.Sleep(3000);
                 var store = _documentStoreHolder.Store;
@@ -40,25 +40,43 @@ public class RequestProducer : BackgroundService
                     var sw = new Stopwatch();
                     sw.Start();
 
-                    var postgresReadEvents = await _dbContext
+                    var postgresReadEvents1 = await _dbContext
                         .Things.Include(x => x.StockCount)
                         .Include(x => x.Product)
                         .Where(x => x.StockCount != null && x.StockCount.Id == "StockCountId-1")
-                        .GroupBy(x => x.ProductId)
-                        .Select(x => new StockCountGroupedResult
-                        {
-                            ProductId = x.Key,
-                            Description = x.First().Product.Description,
-                            ZoneCounts = x.GroupBy(x => x.ZoneId)
-                                .ToDictionary(x => x.Key, x => x.Sum(x => 1)),
-                            Count = x.Sum(x => 1)
-                        })
+                        .GroupBy(x => new { x.Product.Description, x.ZoneId })
+                        .Select(x => new { x.Key.Description, x.Key.ZoneId })
+                        .GroupBy(x => x.Description)
+                        .Select(x => new { x.Key, Count = x.Sum(x => 1) })
+                        .Where(x => x.Key.Contains("0"))
+                        .OrderBy(x => x.Key)
+                        .Skip(500)
+                        .Take(100)
                         .ToListAsync();
 
                     sw.Stop();
 
                     Console.WriteLine(
-                        $"Events fetched: {postgresReadEvents.Count} {sw.ElapsedMilliseconds}"
+                        $"Postgres things fetched: {postgresReadEvents1.Count} {sw.ElapsedMilliseconds}"
+                    );
+
+                    var sw1 = new Stopwatch();
+                    sw1.Start();
+
+                    var session = store.OpenAsyncSession();
+                    var ravenReadEvents = await session
+                        .Advanced.AsyncDocumentQuery<
+                            StockCountGroupedResult,
+                            Index_StockCountThingsGroupedIndex
+                        >()
+                        .Skip(500)
+                        .Take(100)
+                        .ToListAsync();
+
+                    sw1.Stop();
+
+                    Console.WriteLine(
+                        $"Raven things fetched: {ravenReadEvents.Count} {sw1.ElapsedMilliseconds}"
                     );
                 }
                 catch (Exception ex)

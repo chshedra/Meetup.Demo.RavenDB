@@ -32,7 +32,7 @@ public class StockCountEventProducer : BackgroundService
 
             //Send event batches
             var random = new Random();
-            for (int i = 0; i < 6; i++)
+            for (int i = 25130; i < 100000; i++)
             {
                 var readEvent = new StockCountReadEvent()
                 {
@@ -62,7 +62,7 @@ public class StockCountEventProducer : BackgroundService
                 producer.SendStockCountMessage(readEvent);
 
                 Console.WriteLine($" [x] Sent {readEvent.BatchId} {readEvent.Things.Count}");
-                Thread.Sleep(3000);
+                Thread.Sleep(10);
             }
         });
 

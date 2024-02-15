@@ -8,7 +8,11 @@ public class EventProducer
 {
     public void SendStockCountMessage<T>(T message)
     {
-        var factory = new ConnectionFactory { HostName = "localhost" };
+        var factory = new ConnectionFactory
+        {
+            HostName = "localhost",
+            DispatchConsumersAsync = true
+        };
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
 

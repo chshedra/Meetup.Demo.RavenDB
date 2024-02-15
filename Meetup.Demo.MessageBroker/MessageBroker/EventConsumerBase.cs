@@ -11,7 +11,11 @@ public abstract class EventConsumerBase : BackgroundService
 
     public EventConsumerBase(string exchangeName)
     {
-        var factory = new ConnectionFactory { HostName = "localhost" };
+        var factory = new ConnectionFactory
+        {
+            HostName = "localhost",
+            DispatchConsumersAsync = true
+        };
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
 

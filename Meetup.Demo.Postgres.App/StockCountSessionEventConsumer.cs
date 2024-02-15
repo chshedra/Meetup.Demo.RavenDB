@@ -23,7 +23,7 @@ public class StockCountSessionEventConsumer : EventConsumerBase
     {
         stoppingToken.ThrowIfCancellationRequested();
 
-        var consumer = new EventingBasicConsumer(_channel);
+        var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.Received += async (model, e) =>
         {
             byte[] body = e.Body.ToArray();

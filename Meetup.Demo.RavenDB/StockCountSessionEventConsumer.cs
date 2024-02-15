@@ -22,7 +22,7 @@ public class StockCountSessionEventConsumer : EventConsumerBase
     {
         stoppingToken.ThrowIfCancellationRequested();
 
-        var consumer = new EventingBasicConsumer(_channel);
+        var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.Received += async (model, e) =>
         {
             byte[] body = e.Body.ToArray();
@@ -34,15 +34,22 @@ public class StockCountSessionEventConsumer : EventConsumerBase
                 var store = _storeHolder.Store;
                 using var session = store.OpenAsyncSession();
 
-                var stockCount = new StockCount
-                {
-                    Id = stockCountEvent.StockCountId,
-                    StartedAt = stockCountEvent.StartedAt,
-                    Status = stockCountEvent.Status
-                };
+                var existedStockCount = await session.LoadAsync<StockCount>(
+                    stockCountEvent.StockCountId
+                );
 
-                await session.StoreAsync(stockCount);
-                await session.SaveChangesAsync();
+                if (existedStockCount == null)
+                {
+                    var stockCount = new StockCount
+                    {
+                        Id = stockCountEvent.StockCountId,
+                        StartedAt = stockCountEvent.StartedAt,
+                        Status = stockCountEvent.Status
+                    };
+
+                    await session.StoreAsync(stockCount);
+                    await session.SaveChangesAsync();
+                }
             }
 
             Console.WriteLine($" [x] {stockCountEvent?.SessionId}");
