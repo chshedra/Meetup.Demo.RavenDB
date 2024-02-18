@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Meetup.Demo.RavenDB.Domain\Meetup.Demo.Domain.csproj" />
+    <ProjectReference Include="..\Meetup.Demo.Domain\Meetup.Demo.Domain.csproj" />
   </ItemGroup>
 
 </Project>

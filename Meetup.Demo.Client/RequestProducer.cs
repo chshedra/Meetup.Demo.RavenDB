@@ -44,6 +44,7 @@ public class RequestProducer : BackgroundService
                                 .Select(x => new { x.Key, Counted = x.Count() }),
                             Counted = x.Count()
                         })
+                        .OrderBy(x => x.ProductName)
                         .Skip(500)
                         .Take(100)
                         .ToListAsync();
