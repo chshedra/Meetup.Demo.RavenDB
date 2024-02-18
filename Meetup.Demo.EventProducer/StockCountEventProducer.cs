@@ -32,7 +32,7 @@ public class StockCountEventProducer : BackgroundService
 
             //Send event batches
             var random = new Random();
-            for (int i = 25130; i < 100000; i++)
+            for (int i = 31296; i < 100000; i++)
             {
                 var readEvent = new StockCountReadEvent()
                 {

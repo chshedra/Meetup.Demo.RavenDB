@@ -27,29 +27,23 @@ public class RequestProducer : BackgroundService
                 Thread.Sleep(3000);
                 var store = _documentStoreHolder.Store;
 
-                // using var session = store.OpenAsyncSession();
-
-                //var ravenReadEvents = await session
-                //    .Query<StockCountReadEvent>()
-                //    .Where(x => x.Id != null)
-                //    .Take(10)
-                //    .ToListAsync();
-
                 try
                 {
                     var sw = new Stopwatch();
                     sw.Start();
 
-                    var postgresReadEvents1 = await _dbContext
+                    var postgresReadEvents = await _dbContext
                         .Things.Include(x => x.StockCount)
                         .Include(x => x.Product)
-                        .Where(x => x.StockCount != null && x.StockCount.Id == "StockCountId-1")
-                        .GroupBy(x => new { x.Product.Description, x.ZoneId })
-                        .Select(x => new { x.Key.Description, x.Key.ZoneId })
-                        .GroupBy(x => x.Description)
-                        .Select(x => new { x.Key, Count = x.Sum(x => 1) })
-                        .Where(x => x.Key.Contains("0"))
-                        .OrderBy(x => x.Key)
+                        .GroupBy(x => x.Product.Name)
+                        .Select(x => new
+                        {
+                            ProductName = x.Key,
+                            x.First().Product.Description,
+                            Zones = x.GroupBy(x => x.ZoneId)
+                                .Select(x => new { x.Key, Counted = x.Count() }),
+                            Counted = x.Count()
+                        })
                         .Skip(500)
                         .Take(100)
                         .ToListAsync();
@@ -57,7 +51,7 @@ public class RequestProducer : BackgroundService
                     sw.Stop();
 
                     Console.WriteLine(
-                        $"Postgres things fetched: {postgresReadEvents1.Count} {sw.ElapsedMilliseconds}"
+                        $"Postgres things fetched: {postgresReadEvents.Count} {sw.ElapsedMilliseconds}"
                     );
 
                     var sw1 = new Stopwatch();
@@ -69,6 +63,7 @@ public class RequestProducer : BackgroundService
                             StockCountGroupedResult,
                             Index_StockCountThingsGroupedIndex
                         >()
+                        .OrderBy(x => x.ProductId)
                         .Skip(500)
                         .Take(100)
                         .ToListAsync();
