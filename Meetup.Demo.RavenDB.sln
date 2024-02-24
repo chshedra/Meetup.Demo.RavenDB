@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.RavenDB.App", "Meetup.Demo.RavenDB\Meetup.Demo.RavenDB.App.csproj", "{F02F710E-10D2-4019-A6BC-15D547F80226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.RavenDB.App", "Meetup.Demo.RavenDB.App\Meetup.Demo.RavenDB.App.csproj", "{F02F710E-10D2-4019-A6BC-15D547F80226}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meetup.Demo.Domain", "Meetup.Demo.Domain\Meetup.Demo.Domain.csproj", "{C51058E8-9D71-493A-BD01-EC2957757E36}"
 EndProject
