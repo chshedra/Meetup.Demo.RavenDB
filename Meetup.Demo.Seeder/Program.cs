@@ -8,10 +8,10 @@ internal class Program
     {
         var store = new DocumentStoreHolder().Store;
 
-        // using var session = store.OpenSession();
-        using var dbContext = new AppDbContext();
+        using var session = store.OpenSession();
+        //using var dbContext = new AppDbContext();
 
-        for (var i = 56878; i < 500000; i++)
+        for (var i = 300000; i < 500000; i++)
         {
             var product = new Product()
             {
@@ -20,14 +20,19 @@ internal class Program
                 Description = $"Description of product {i}"
             };
 
-            //session.Store(product);
-            dbContext.Products.Add(product);
+            session.Store(
+                new Product()
+                {
+                    Id = $"ProductId-{i}",
+                    Name = $"Product {i}",
+                    Description = $"Description of product {i}"
+                }
+            );
+            //dbContext.Products.Add(product);
 
-            if (i % 10 == 0)
-            {
-                dbContext.SaveChanges();
-            }
+            if (i % 10 == 0) { }
         }
+        session.SaveChanges();
         //for (int i = 0; i < 10; i++)
         //{
         //    var random = new Random();
@@ -47,7 +52,7 @@ internal class Program
         //    }
         //    dbContext.Things.AddRange(things);
 
-        //    //session.SaveChanges();
+        //
         //}
     }
 }

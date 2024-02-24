@@ -29,40 +29,46 @@ public class StockCountReadEventConsumer : EventConsumerBase
             byte[] body = e.Body.ToArray();
             var json = Encoding.UTF8.GetString(body);
             var stockCountEvent = JsonSerializer.Deserialize<StockCountReadEvent>(json);
-
-            if (stockCountEvent != null)
+            try
             {
-                var things = stockCountEvent.Things.Select(x => new Thing
+                if (stockCountEvent != null)
                 {
-                    Id = x.ThingId,
-                    ProductId = x.ProductId,
-                    ZoneId = x.ZoneId,
-                    StockCountId = stockCountEvent.StockCountId
-                });
+                    var things = stockCountEvent.Things.Select(x => new Thing
+                    {
+                        Id = x.ThingId,
+                        ProductId = x.ProductId,
+                        ZoneId = x.ZoneId,
+                        StockCountId = stockCountEvent.StockCountId
+                    });
 
-                foreach (var thing in things)
-                {
-                    var product = await _dbContext.Products.FirstAsync(x =>
-                        x.Id == thing.ProductId
+                    foreach (var thing in things)
+                    {
+                        var product = await _dbContext.Products.FirstAsync(x =>
+                            x.Id == thing.ProductId
+                        );
+                    }
+
+                    var stockCount = await _dbContext.StockCounts.FirstAsync(x =>
+                        x.Id == stockCountEvent.StockCountId
                     );
-                }
 
-                var stockCount = await _dbContext.StockCounts.FirstAsync(x =>
-                    x.Id == stockCountEvent.StockCountId
-                );
+                    if (stockCount.Things == null)
+                    {
+                        stockCount.Things = new List<Thing>(things);
+                    }
+                    else
+                    {
+                        stockCount.Things.AddRange(things);
+                    }
 
-                if (stockCount.Things == null)
-                {
-                    stockCount.Things = new List<Thing>(things);
+                    Console.WriteLine($" [x] Batch consumed: {stockCountEvent?.BatchId}");
+                    await _dbContext.SaveChangesAsync();
                 }
-                else
-                {
-                    stockCount.Things.AddRange(things);
-                }
-
-                Console.WriteLine($" [x] Batch consumed: {stockCountEvent?.BatchId}");
             }
-            await _dbContext.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         };
         _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
 

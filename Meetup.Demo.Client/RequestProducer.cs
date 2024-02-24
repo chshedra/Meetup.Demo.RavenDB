@@ -45,7 +45,7 @@ public class RequestProducer : BackgroundService
                             Counted = x.Count()
                         })
                         .OrderBy(x => x.ProductName)
-                        .Skip(500)
+                        //.Skip(500)
                         .Take(100)
                         .ToListAsync();
 
@@ -65,7 +65,7 @@ public class RequestProducer : BackgroundService
                             Index_StockCountThingsGroupedIndex
                         >()
                         .OrderBy(x => x.ProductId)
-                        .Skip(500)
+                        //.Skip(500)
                         .Take(100)
                         .ToListAsync();
 

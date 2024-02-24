@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Meetup.Demo.Domain;
+﻿namespace Meetup.Demo.Domain;
 
 public class ThingReadInfo
 {
