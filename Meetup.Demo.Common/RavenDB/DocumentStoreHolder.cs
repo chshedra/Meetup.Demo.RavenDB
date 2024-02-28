@@ -16,7 +16,7 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         var store = new DocumentStore
         {
             Urls = new[] { "https://a.ashchedra.ravendb.community:8080/", },
-            Conventions = { MaxNumberOfRequestsPerSession = 10, UseOptimisticConcurrency = true },
+            Conventions = { UseOptimisticConcurrency = true },
             Database = "test",
             Certificate = new X509Certificate2(
                 "D:\\RavenDB\\ashchedra.Cluster.Settings 2024-02-07 16-02\\admin.client.certificate.ashchedra.pfx"

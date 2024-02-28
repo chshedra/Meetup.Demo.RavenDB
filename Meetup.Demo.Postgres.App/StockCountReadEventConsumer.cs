@@ -41,13 +41,6 @@ public class StockCountReadEventConsumer : EventConsumerBase
                         StockCountId = stockCountEvent.StockCountId
                     });
 
-                    foreach (var thing in things)
-                    {
-                        var product = await _dbContext.Products.FirstAsync(x =>
-                            x.Id == thing.ProductId
-                        );
-                    }
-
                     var stockCount = await _dbContext.StockCounts.FirstAsync(x =>
                         x.Id == stockCountEvent.StockCountId
                     );
